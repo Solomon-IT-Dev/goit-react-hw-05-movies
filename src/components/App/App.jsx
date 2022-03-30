@@ -1,6 +1,9 @@
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Container from 'components/Container';
 import AppBar from 'components/AppBar';
+import HomePageView from 'views/HomePageView';
+import MoviesPageView from 'views/MoviesPageView';
+import MovieDetailsPageView from 'views/MovieDetailsPageView';
 import NotFoundView from 'views/NotFoundView';
 
 export default function App() {
@@ -8,15 +11,12 @@ export default function App() {
     <Container>
       <AppBar />
 
-      <Switch>
-        <Route exact path="/"></Route>
-
-        <Route path="/movies"></Route>
-
-        <Route>
-          <NotFoundView />
-        </Route>
-      </Switch>
+      <Routes>
+        <Route path="/" element={<HomePageView />} />
+        <Route path="/movies" element={<MoviesPageView />} />
+        <Route path="/movies/:movieId" element={<MovieDetailsPageView />} />
+        <Route path="*" element={<NotFoundView />} />
+      </Routes>
     </Container>
   );
 }
