@@ -1,5 +1,10 @@
-import styles from './PageHeading.module.css';
+import PropTypes from 'prop-types';
+import { PageTitle } from './PageHeading.slyled';
 
 export default function PageHeading({ text }) {
-  return <h1 className={styles.title}>{text}</h1>;
+  return <PageTitle>{text}</PageTitle>;
 }
+
+PageHeading.propTypes = {
+  text: PropTypes.string.isRequired,
+};
