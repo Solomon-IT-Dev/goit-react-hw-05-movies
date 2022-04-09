@@ -1,10 +1,11 @@
 import { useState, useEffect } from 'react';
 import usePrevious from 'hooks/usePrevious';
-import { Link } from 'react-router-dom';
 import { fetchSearchMovie } from 'services/moviesApi';
 import * as notify from 'utils/notifications';
 import PageHeading from 'components/PageHeading';
 import SearchForm from 'components/SearchForm';
+import MoviesGallery from 'components/MoviesGallery';
+import { TextWrapper, WelcomeText } from './MoviesPageView.styled';
 
 export default function MoviesPageView() {
   const [searchQuery, setSearchQuery] = useState('');
@@ -57,14 +58,15 @@ export default function MoviesPageView() {
     <>
       <PageHeading text="Movies" />
       <SearchForm onSubmit={onFormSubmit} />
-      <ul>
-        {movies.length > 0 &&
-          movies.map(({ id, title }) => (
-            <li key={id} id={id}>
-              <Link to={`/movies/${id}`}>{title}</Link>
-            </li>
-          ))}
-      </ul>
+      {movies.length > 0 ? (
+        <MoviesGallery moviesSet={movies} />
+      ) : (
+        <TextWrapper>
+          <WelcomeText>
+            All filmmakers are waiting for your search query to show movies.
+          </WelcomeText>
+        </TextWrapper>
+      )}
     </>
   );
 }

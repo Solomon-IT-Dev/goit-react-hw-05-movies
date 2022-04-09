@@ -17,7 +17,7 @@ export default function SearchForm({ onSubmit }) {
   };
 
   const onInputChange = evt => {
-    const normalizeInputValue = evt.currentTarget.value.toLowerCase().trim();
+    const normalizeInputValue = evt.currentTarget.value.toLowerCase();
     setSearchQuery(normalizeInputValue);
   };
 

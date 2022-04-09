@@ -1,28 +1,14 @@
-import { lazy } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css';
+import createAsyncView from '../../utils/createAsyncView';
 import Layout from 'components/Layout';
 
-const HomePageView = lazy(() =>
-  import('views/HomePageView' /* webpackChunkName: "home-view" */)
-);
-const MoviesPageView = lazy(() =>
-  import('views/MoviesPageView' /* webpackChunkName: "movies-view" */)
-);
-const MovieDetailsPageView = lazy(() =>
-  import(
-    'views/MovieDetailsPageView' /* webpackChunkName: "movie-detail-view" */
-  )
-);
-const CastView = lazy(() =>
-  import('views/CastView' /* webpackChunkName: "cast-view" */)
-);
-const ReviewsView = lazy(() =>
-  import('views/ReviewsView' /* webpackChunkName: "reviews-view" */)
-);
-const NotFoundView = lazy(() =>
-  import('views/NotFoundView' /* webpackChunkName: "not-found-view" */)
-);
+const HomePageView = createAsyncView('HomePageView');
+const MoviesPageView = createAsyncView('MoviesPageView');
+const MovieDetailsPageView = createAsyncView('MovieDetailsPageView');
+const CastView = createAsyncView('CastView');
+const ReviewsView = createAsyncView('ReviewsView');
+const NotFoundView = createAsyncView('NotFoundView');
 
 export default function App() {
   return (

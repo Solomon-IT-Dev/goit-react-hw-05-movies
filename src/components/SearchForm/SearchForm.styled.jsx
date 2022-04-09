@@ -3,11 +3,14 @@ import styled from '@emotion/styled';
 export const QueryForm = styled.form`
   display: flex;
   align-items: center;
+  margin: 10px auto 30px auto;
   width: 100%;
   max-width: 600px;
   background-color: #fff;
   border-radius: 3px;
   overflow: hidden;
+  border: 1px solid #b3b1b1;
+  box-shadow: 0 8px 6px -6px black;
 `;
 
 export const QueryFormInput = styled.input`
@@ -32,6 +35,7 @@ export const QueryFormBtn = styled.button`
   height: 48px;
   border: 0;
   opacity: 0.6;
+  background-color: #b3b1b1;
   transition: opacity 250ms cubic-bezier(0.4, 0, 0.2, 1);
   cursor: pointer;
   outline: none;
