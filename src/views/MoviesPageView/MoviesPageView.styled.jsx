@@ -1,5 +1,13 @@
 import styled from '@emotion/styled';
 
+export const LoaderWrapper = styled.div`
+  position: relative;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto;
+  padding: 50px;
+`;
+
 export const TextWrapper = styled.div`
   width: 720px;
   margin: 100px auto 0 auto;

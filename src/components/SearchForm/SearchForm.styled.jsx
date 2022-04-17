@@ -6,8 +6,8 @@ export const QueryForm = styled.form`
   margin: 10px auto 30px auto;
   width: 100%;
   max-width: 600px;
-  background-color: #fff;
-  border-radius: 3px;
+  background-color: #ffffff;
+  border-radius: 1px;
   overflow: hidden;
   border: 1px solid #b3b1b1;
   box-shadow: 0 8px 6px -6px black;

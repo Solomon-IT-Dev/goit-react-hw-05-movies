@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { useLocation } from 'react-router-dom';
 import {
   MovieItem,
   MovieLink,
@@ -19,11 +20,13 @@ export default function MovieCard({
   title,
   vote_average,
 }) {
+  const location = useLocation();
+
   const releaseDate = new Date(release_date);
 
   return (
     <MovieItem id={id}>
-      <MovieLink to={`/movies/${id}`}>
+      <MovieLink to={`/movies/${id}`} state={{ from: location }}>
         <MovieImg
           src={
             poster_path

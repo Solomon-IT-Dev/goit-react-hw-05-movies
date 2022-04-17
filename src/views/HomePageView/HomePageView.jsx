@@ -5,7 +5,7 @@ import MoviesGallery from 'components/MoviesGallery';
 import { TextWrapper, NoMovieText } from './HomePageView.styled';
 
 export default function HomePageView() {
-  const [movies, setMovies] = useState([]);
+  const [movies, setMovies] = useState(null);
 
   useEffect(() => {
     fetchTrendingMovies().then(response => setMovies(response.data.results));
@@ -14,9 +14,8 @@ export default function HomePageView() {
   return (
     <>
       <PageHeading text="Trending today" />
-      {movies.length > 0 ? (
-        <MoviesGallery moviesSet={movies} />
-      ) : (
+      {movies && <MoviesGallery moviesSet={movies} />}
+      {movies && movies.length === 0 && (
         <TextWrapper>
           <NoMovieText>
             All filmmakers are on holiday. <br /> There are no trending movies

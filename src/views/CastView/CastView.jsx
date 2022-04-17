@@ -1,33 +1,66 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchMovieCredits } from 'services/moviesApi';
+import ActorCard from 'components/ActorCard';
+import ButtonLink from 'components/ButtonLink';
+import Loader from 'components/Loader';
+import {
+  LoaderWrapper,
+  CastList,
+  NoCastText,
+  BtnWrapper,
+} from './CastView.styled';
 
 export default function CastView() {
-  let { movieId } = useParams();
+  const { movieId } = useParams();
   const [cast, setCast] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    fetchMovieCredits(movieId).then(response => setCast(response.data.cast));
+    setIsLoading(true);
+    fetchMovieCredits(movieId)
+      .then(response => setCast(response.data.cast))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [movieId]);
 
-  const reducedCast = [...cast].slice(0, 10);
-  console.log(reducedCast);
+  const fromPage = location.state?.from ?? '/';
 
-  return (
-    <ul>
-      {cast &&
-        reducedCast.map(({ id, character, name, profile_path }) => (
-          <li key={id}>
-            <div>
-              <img
-                src={`https://image.tmdb.org/t/p/w300${profile_path}`}
-                alt={name}
-              />
-              <p>{character}</p>
-              <p>{name}</p>
-            </div>
-          </li>
-        ))}
-    </ul>
+  const reducedCast = [...cast].slice(0, 10);
+
+  return !isLoading ? (
+    cast.length > 0 ? (
+      <>
+        <CastList>
+          {reducedCast.map(({ id, ...props }) => (
+            <ActorCard key={id} {...props} />
+          ))}
+        </CastList>
+        <BtnWrapper>
+          <ButtonLink
+            to={`/movies/${movieId}`}
+            text="Close"
+            state={{ from: fromPage }}
+          />
+        </BtnWrapper>
+      </>
+    ) : (
+      <>
+        <NoCastText>Actors cast is absent</NoCastText>
+        <BtnWrapper>
+          <ButtonLink
+            to={`/movies/${movieId}`}
+            text="Close"
+            state={{ from: fromPage }}
+          />
+        </BtnWrapper>
+      </>
+    )
+  ) : (
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
   );
 }

@@ -7,7 +7,7 @@ export default function Loader() {
       <Bars
         height={100}
         width={100}
-        color="#333333"
+        color="#b43321"
         ariaLabel="Loading indicator"
       />
     </LoaderWrapper>

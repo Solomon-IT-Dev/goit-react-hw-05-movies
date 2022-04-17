@@ -1,3 +1,11 @@
+import ButtonLink from 'components/ButtonLink';
+import { NotFoundMessage, NotFoundWrapper } from './NotFoundView.styled';
+
 export default function NotFoundView() {
-  return <h1>🐒 404 Page not found 🙈 🙉 🙊</h1>;
+  return (
+    <NotFoundWrapper>
+      <NotFoundMessage>🐒 404 Page not found 🙈 🙉 🙊</NotFoundMessage>
+      <ButtonLink to="/" text="Go Home" />
+    </NotFoundWrapper>
+  );
 }

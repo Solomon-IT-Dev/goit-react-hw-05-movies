@@ -1,27 +1,64 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { fetchMovieReviews } from 'services/moviesApi';
+import ReviewCard from 'components/ReviewCard';
+import ButtonLink from 'components/ButtonLink';
+import Loader from 'components/Loader';
+import {
+  LoaderWrapper,
+  ReviewsList,
+  NoReviewsText,
+  BtnWrapper,
+} from './ReviewsView.styled';
 
 export default function ReviewsView() {
-  let { movieId } = useParams();
+  const { movieId } = useParams();
   const [reviews, setReviews] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
-    fetchMovieReviews(movieId).then(response =>
-      setReviews(response.data.results)
-    );
+    setIsLoading(true);
+    fetchMovieReviews(movieId)
+      .then(response => setReviews(response.data.results))
+      .finally(() => {
+        setIsLoading(false);
+      });
   }, [movieId]);
-  console.log(reviews);
 
-  return (
-    <ul>
-      {reviews.length > 0 &&
-        reviews.map(({ id, author, content }) => (
-          <li key={id}>
-            <p>{author}</p>
-            <p>{content}</p>
-          </li>
-        ))}
-    </ul>
+  const fromPage = location.state?.from ?? '/';
+
+  return !isLoading ? (
+    reviews.length > 0 ? (
+      <>
+        <ReviewsList>
+          {reviews.map(({ id, ...props }) => (
+            <ReviewCard key={id} {...props} />
+          ))}
+        </ReviewsList>
+        <BtnWrapper>
+          <ButtonLink
+            to={`/movies/${movieId}`}
+            text="Close"
+            state={{ from: fromPage }}
+          />
+        </BtnWrapper>
+      </>
+    ) : (
+      <>
+        <NoReviewsText>Reviews are absent</NoReviewsText>
+        <BtnWrapper>
+          <ButtonLink
+            to={`/movies/${movieId}`}
+            text="Close"
+            state={{ from: fromPage }}
+          />
+        </BtnWrapper>
+      </>
+    )
+  ) : (
+    <LoaderWrapper>
+      <Loader />
+    </LoaderWrapper>
   );
 }
