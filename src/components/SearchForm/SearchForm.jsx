@@ -17,13 +17,13 @@ export default function SearchForm({ onSubmit }) {
   };
 
   const onInputChange = evt => {
-    const normalizeInputValue = evt.currentTarget.value.toLowerCase().trim();
+    const normalizeInputValue = evt.currentTarget.value.toLowerCase();
     setSearchQuery(normalizeInputValue);
   };
 
   const onSearch = evt => {
     evt.preventDefault();
-    onSubmit(searchQuery);
+    onSubmit(searchQuery.trim());
     formReset();
   };
 
