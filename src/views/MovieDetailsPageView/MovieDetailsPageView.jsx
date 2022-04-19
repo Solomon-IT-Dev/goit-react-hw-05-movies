@@ -20,7 +20,7 @@ export default function MovieDetailsPageView() {
     fetchMovieDetails(movieId)
       .then(response => setMovie(response.data))
       .catch(() => navigate('*'));
-  }, [movieId]);
+  }, [movieId, navigate]);
 
   const fromPage = location.state?.from ?? '/';
 
