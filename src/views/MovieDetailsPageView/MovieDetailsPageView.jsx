@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useLocation, Outlet } from 'react-router-dom';
+import { useParams, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { fetchMovieDetails } from 'services/moviesApi';
 import PageHeading from 'components/PageHeading';
 import ButtonLink from 'components/ButtonLink';
@@ -14,9 +14,12 @@ export default function MovieDetailsPageView() {
   const { movieId } = useParams();
   const [movie, setMovie] = useState({});
   const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then(response => setMovie(response.data));
+    fetchMovieDetails(movieId)
+      .then(response => setMovie(response.data))
+      .catch(() => navigate('*'));
   }, [movieId]);
 
   const fromPage = location.state?.from ?? '/';
